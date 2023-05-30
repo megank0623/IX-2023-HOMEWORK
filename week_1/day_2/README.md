@@ -1,1 +1,1 @@
-Day 2 homework: make a homework repo and put it on github
+Day 2 homework: make a homework repo and put it on github!
