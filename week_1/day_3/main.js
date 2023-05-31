@@ -1,4 +1,4 @@
-function fib(){
+function meganFib(){
     let val = 0;
     let nextVal = 1;
     let temp;
@@ -11,4 +11,4 @@ function fib(){
     }
 }
 
-fib();
+meganFib();
