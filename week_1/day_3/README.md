@@ -1,1 +1,0 @@
-this is a placeholder - put day 3 homework here later!
