@@ -11,8 +11,8 @@
 </head>
 <body class="back">
 
-    <div class="container">
-        <div class="card text-center mt-4">
+    <div class="container p-3">
+        <div class="card text-center mt-4 p-3">
             <h1 class="py-4">Badly explained movies</h1>
             <div id="warning" class="warn-block"></div>
             <hr class="mx-3"/>
@@ -31,13 +31,15 @@
                         placeholder="Enter guess here"
                     />
                 </div>
-
-                <button class="btn btn-primary" type="submit">Submit</button>
+                
+                <div class="d-grid mx-3">
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                </div>
                 
             </form>
                 <hr class="mx-3"/>
-                <div id="clue2" class="text-center"></div>
-                <button class="btn btn-secondary my-4 mx-4" onclick="showHint()" type="submit">Show hint</button>
+                <div id="clue2" class="text-center mb-3"></div>
+                <button class="btn btn-secondary mx-3" onclick="showHint()" type="submit">Show hint</button>
                 
         </div>
     </div>
