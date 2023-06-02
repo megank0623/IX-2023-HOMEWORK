@@ -38,18 +38,26 @@ function checkGuess(event){
 
     //if the user has the correct guess
     if (userGuess === curMovie.title){
+        guess.innerHTML = "";
         setMovie();
+        warning.innerHTML = "";
 
     //if the user guessed incorrectly, deduct from their guesses and tell them how many left
     } else {
         guessCount--;
+        guess.innerHTML = "";
 
         if (guessCount > 0){
            warning.innerHTML = `Incorrect, you have ${guessCount} guesses left`; 
         } else {        //QUESTION/stub: how could I get this to show the message for a certain number of times, then go away and reset?
             warning.innerHTML = 'Incorrect, no more guesses';
+            setMovie();
             guessCount = 3;
         }
     }
     
+}
+
+function showHint(){
+    hintArea.innerHTML = curMovie.hint;
 }
