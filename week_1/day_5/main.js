@@ -1,76 +1,106 @@
 console.log("connected");
 
 class Task{
-    constructor(task){
-        this.task = task;
+    constructor(text){
+        this.text = text;
     }
 
     static fromJSON(json) {
-        return new Book(json.title, json.author, json.isbn);
+        return new Task(json.text);
     }
 }
 
 class UI{
     constructor(){
-        this.tasksUsed = 0;         //keep track of the tasks used already
-        this.taskArray = [true, true, true];        //keep track of the tasks - false if occupied
+        this.taskArray = [];        //keep track of the tasks
+        console.log(`starting task array: ${this.taskArray}`)
         this.form = document.getElementById('form');
 
         this.warningLabel = document.getElementById('warning-label');
         this.warningLabel.innerHTML = "";
 
-        this.task1 = document.getElementById("task1");
-        this.task2 = document.getElementById("task2");
-        this.task3 = document.getElementById("task3");
+        this.taskInput = document.getElementById('task-input');
+
+        this.tableBody = document.getElementById('table-body');
 
         this.form.addEventListener('submit', (e) => this.addTask(e));
+
+        //this.loadFromLocalStorage();
     }
 
     addTask(e){
-        let taskArray = this.taskArray;
-        console.log(taskArray);
         e.preventDefault();
-        let task = document.getElementById('taskInput');
-        console.log(`the input task was: ${task.value}`);
+        let ti = this.taskInput;
+        let ta = this.taskArray;
 
-        if (this.tasksUsed === 3){
-            console.log("Already have three tasks listed, need to delete one before adding others");
-            this.warningLabel.innerHTML = "Sorry, please delete one of your tasks before adding another";
-            task.value = "";
+        console.log(`submit clicked, task: ${ti.value}`);
+
+        //if there was nothing input just return
+        if (ti.value === '' ) {
+            this.warningLabel.innerHTML = "Please enter a task before pressing 'add task'";
+            return;
         } else {
-            //check to see which task area is open
-            if (taskArray[0]){
-                this.task1.innerHTML = task.value;
-
-                this.updateTable(0);
-
-            } else if (taskArray[1]){
-                this.task2.innerHTML = task.value;
-
-                this.updateTable(1);
-            } else {
-                this.task3.innerHTML = task.value;
-
-                this.updateTable(2);
-            }
+            this.warningLabel.innerHTML = "";
         }
+
+        const newTask = new Task(ti.value);
+        ta.push(newTask);
+
+        //save to local storage?
+        this.updateTable();
     }
 
-    deleteTask(){
+    deleteTask(task){
 
-    }
-
-
-    updateTable(index){
-        let task = document.getElementById('taskInput');
+        let ta = this.taskArray;
+        this.taskArray = ta.filter((x) => {
+            return task.text !== x.task;
+        });
         
-        //update values
-        this.taskArray[index] = false;
-        task.value = "";
-        this.tasksUsed += 1;
-        this.warningLabel.innerHTML = "";
+        console.log(`deleted, new task array: ${this.taskArray}`);
+      
+        //save to local storage?
+        this.updateTable();
     }
 
+    updateTable() {
+        //this.tableBody.innerHTML = '';
+        this.tableBody.value = "";
+    
+        for (let i = 0; i < this.taskArray.length; i++) {
+          const task = this.taskArray[i];
+    
+          const tr = this.createRow(task);
+          this.tableBody.appendChild(tr);
+        }
+
+        this.taskInput.value = "";
+    }
+
+    createRow(task){
+        const tr = document.createElement('tr');
+
+        const tdTask = document.createElement('td');
+        const tdComplete = document.createElement('input');
+        const tdDeleteButton = document.createElement('button');
+
+        //setting up the task cell
+        tdTask.innerHTML = task.text;
+
+        //setting up the checkbox cell
+        tdComplete.type = 'checkbox';
+
+        //setting up the delete button
+        tdDeleteButton.setAttribute('class', 'btn btn-outline-danger');
+        tdDeleteButton.innerHTML = '🗑️';
+        tdDeleteButton.addEventListener('click', () => this.deleteTask(task));
+
+        tr.appendChild(tdTask);
+        tr.appendChild(tdComplete);
+        tr.appendChild(tdDeleteButton);
+
+        return tr;
+    }
 
 }
 

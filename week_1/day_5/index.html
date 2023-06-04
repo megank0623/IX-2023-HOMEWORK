@@ -24,7 +24,7 @@
                         type="text" 
                         class="form-control" 
                         placeholder="Task" 
-                        id = 'taskInput'
+                        id = 'task-input'
                     >
                     <button class="btn btn-outline-secondary" type="submit"> + </button>
                 </div>
@@ -38,40 +38,7 @@
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td id="task1">(add task here)</td>
-                    <td>
-                        <div>
-                            <input class="form-check-input" type="checkbox" id="check0">
-                          </div>
-                    </td>
-                    <td>
-                        <button class="btn btn-danger" type="button" onclick="deleteTask()">Delete</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td id="task2">(add task here)</td>
-                    <td>
-                        <div>
-                            <input class="form-check-input" type="checkbox" id="check1">
-                          </div>
-                    </td>
-                    <td>
-                        <button class="btn btn-danger" type="button" onclick="deleteTask()">Delete</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td id="task3">(add task here)</td>
-                    <td>
-                        <div>
-                            <input class="form-check-input" type="checkbox" id="check2">
-                          </div>
-                    </td>
-                    <td>
-                        <button class="btn btn-danger" type="button" onclick="deleteTask()">Delete</button>
-                    </td>
-                  </tr>
+                <tbody id="table-body">
                 </tbody>
               </table>
 
