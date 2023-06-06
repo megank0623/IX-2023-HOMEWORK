@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function InputArea(props) {
+export default function DataTable(props) {
   return (
     <div>
       <table className="table mt-5">

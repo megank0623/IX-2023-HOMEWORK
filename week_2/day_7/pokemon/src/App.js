@@ -33,14 +33,31 @@ function App() {
     //data comes in an array, and the results array is what we're looking for
 
     let postData = data.results.map((post) => {
-      return new Post(post.name, post.baseExp, post.weight, post.height);
+      //return new Post(post.name, post.baseExp, post.weight, post.height);
+      let newPost = makeOnePost(post);
+      console.log(`adding post: ${post}`);
+      return newPost;
     });
-    console.log(postData);
-    console.log(`post data has a length of ${postData.length}`);
+    //console.log(postData);
+    //console.log(`post data has a length of ${postData.length}`);
 
     setPosts(postData);
   }
 
+  async function makeOnePost(post) {
+    let url = post.url;
+    const res = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',       //STUB: i dont know what this line does
+      },
+    });
+
+    const data = await res.json();
+    //console.log(data);
+
+    return new Post(data.name, data.baseExp, data.weight, data.height, post.url);
+  }
 
   /*this is random, but im trying it to see if I can understand this
   //STUB: still not entirely sure what is going on in this function
