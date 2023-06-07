@@ -1,23 +1,18 @@
 import './App.css';
 import { useState } from 'react';
 
-//import bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-//import the Post class from models
-import { Post } from './models/post';
-
-//import the input area from the components folder
-import DataTable from './components/DataTable';
+import { Post } from './models/post';               //import posts from the models folder
+import DataTable from './components/DataTable';     //import the data table from components folder
 
 
 function App() {
 
+  //this holds the base url and the list of posts
   const [posts, setPosts] = useState([]);
   const url = 'https://pokeapi.co/api/v2/pokemon/';
 
 
-  //STUB: i kind of know whats going on but not really
   async function fetchPosts() {
     // fetch API
     const res = await fetch(url, {
@@ -28,42 +23,30 @@ function App() {
     });
 
     const data = await res.json();
-    console.log(data);
 
-    //data comes in an array, and the results array is what we're looking for
+    //want the results array from the data
+    const results = data.results;
 
-    let postData = data.results.map((post) => {
-      //return new Post(post.name, post.baseExp, post.weight, post.height);
-      let newPost = makeOnePost(post);
-      console.log(`adding post: ${post}`);
-      return newPost;
-    });
-    //console.log(postData);
-    //console.log(`post data has a length of ${postData.length}`);
+    console.log(results);
 
-    setPosts(postData);
-  }
-
-  async function makeOnePost(post) {
-    let url = post.url;
-    const res = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',       //STUB: i dont know what this line does
-      },
+    let postData = await results.map((post) => {
+      return post.name;
     });
 
-    const data = await res.json();
-    //console.log(data);
+    //now should have an array of names in the post data
+    console.log(`the post data: ${postData}`);
 
-    return new Post(data.name, data.baseExp, data.weight, data.height, post.url);
+    for (let i = 0; i < postData.length; i++){
+      const url = 'https://pokeapi.co/api/v2/pokemon/' + postData[i];
+      getPokeStats(postData[i], url);
+    }
   }
 
-  /*this is random, but im trying it to see if I can understand this
-  //STUB: still not entirely sure what is going on in this function
-  async function fetchOnePost(pokemon) {
+
+  //once you get the name and specific url, pull character data from there
+  async function getPokeStats(pokeName, url){
     // fetch API
-    const res = await fetch(url + pokemon, {
+    const res = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -71,27 +54,16 @@ function App() {
     });
 
     const data = await res.json();
-    // console.log(data);
-    let postData = data.map((post) => {
-      return new Post(post.name, post.baseExp, post.weight, post.type);
-    });
-    // console.log(postData);
-
-    setPosts(postData);
+    let newPost = new Post(pokeName, data.base_experience, data.weight, data.height);
+    setPosts(posts => [...posts, newPost]);
   }
-  */
-
 
   return (
     <div className='text-center'>
       <div>
         <h1 className='m-3'>Find Pokemon Data!</h1>
         <div>
-            <h4>Quick links:</h4>
-            
-        </div>
-        <div>
-            <h4 className='m-4'>...or see all data</h4>
+            <h4 className='m-4'>Click below to see all data</h4>
             <button className='btn btn-dark' onClick={fetchPosts}>Fetch all data!</button>
         </div>
       </div>
