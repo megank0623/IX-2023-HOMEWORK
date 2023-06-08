@@ -37,7 +37,7 @@ export default function BookForm(props) {
       return;
     }
 
-    let book = new Book(title, author, isbn);
+    let book = new Book(null, title, author, isbn);
     //now pass the book to the app file and clear the inputs
     props.onBookCreated(book);
     clearInputs();
@@ -74,7 +74,7 @@ export default function BookForm(props) {
         </div>
 
         <div className="mb-3">
-          <label className="form-label"> #ISBN </label>
+          <label className="form-label"> ISBN </label>
           <input 
             id="isbn-input" 
             type="text" 
