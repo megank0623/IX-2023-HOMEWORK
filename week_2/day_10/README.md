@@ -1,1 +1,0 @@
-this is a placeholder for day 10 homework
