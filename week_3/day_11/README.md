@@ -1,1 +1,1 @@
-this is a placeholder - put day 11 homework here later!
+there wasn't homework for today other than doing intern work
